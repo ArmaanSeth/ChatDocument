@@ -9,8 +9,9 @@ export default function App() {
   
   const [chat_history, addtohistory] = useState<Item[]>([])
   const [question, setQuestion] = useState();
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [filename, setFilename] = useState('');
+  
   const appendItem = (newItem: Item) => {
     addtohistory(prevList => [...prevList, newItem]);
   };
@@ -22,6 +23,7 @@ export default function App() {
 
   const handleFileChange = (event: any) => {
     setFile(event.target.files[0]);
+    addtohistory([])
     if(event.target.files[0]) setFilename(event.target.files[0].name)
     const fup=document.getElementById('fup')
     if (fup){ fup.style.display='block'}
@@ -51,7 +53,9 @@ export default function App() {
         .then((data) => {
           console.log(data.result)
           if(data.result.startsWith('ERROR:')){
+            setFile(null)
             setFilename('')
+            
             const fup=document.getElementById('fup')
             if(fup) fup.style.display='none'
             appendItem({ type: 'error', text: data.result });
@@ -61,6 +65,8 @@ export default function App() {
         })
         .catch((error) => {
           appendItem({ type: 'Error', text:'An Error Occured' });
+        }).finally(()=>{
+          if(s) s.style.display='none';
         });
     }catch(err){
       appendItem({ type: 'Error', text:'An Error Occured' });

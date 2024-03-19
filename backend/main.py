@@ -63,7 +63,8 @@ async def predict(question: str = Form(None) ,file: UploadFile = File(None)) -> 
                 obj.prepare_chain(text)
 
         res=obj.predict(question)      
-    except Exception:
+    except Exception as e:
+        print(e)
         res="ERROR: Unable to process due to some error!☠️☠️☠️"
     return {"result":res}
 
