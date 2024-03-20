@@ -46,7 +46,7 @@ export default function App() {
         formData.append("question", question);
       }
 
-      fetch("http://127.0.0.1:8000/predict", {
+      fetch("https://chatdocument.onrender.com/predict", {
         method: "POST",
         body: formData,
       }).then((response) => response.json())
@@ -69,6 +69,7 @@ export default function App() {
           if(s) s.style.display='none';
         });
     }catch(err){
+      console.log(err)
       appendItem({ type: 'Error', text:'An Error Occured' });
     }
   };
