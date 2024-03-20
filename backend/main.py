@@ -31,7 +31,7 @@ app.add_middleware(
 )
 
 @app.post("/predict", response_model = Response)
-async def predict(question: str = Form(None) ,file: UploadFile = File(None)) -> dict:
+async def predict(question: str = Form(None) ,file: UploadFile = File(None)) -> dict: 
     try:
         if (file is not None) and (obj.filename != file.filename):
             if(file.size/(1024*1024)>100):
