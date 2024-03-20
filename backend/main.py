@@ -33,17 +33,17 @@ app.add_middleware(
 @app.post("/predict", response_model = Response)
 async def predict(question: str = Form(None) ,file: UploadFile = File(None)) -> dict:
     try:
-        if (file is not None) and (obj.filename != file.filename):
-            if(file.size/(1024*1024)>100):
+        if (file is not None) and (obj.filename != file.filename): # if file if uploaded and is different form the previous loaded file
+            if(file.size/(1024*1024)>100): # check if filesize is greater than 100mb
                 obj.filename=''
                 return {"result": f"ERROR: Reached filesize limit<=100mb, your filesize={file.size/(1024*1024):.2f}mb"}
-            elif(file.filename.rsplit('.', 1)[-1] not in ['pdf', 'docx', 'txt', 'csv']):
+            elif(file.filename.rsplit('.', 1)[-1] not in ['pdf', 'docx', 'txt', 'csv']): #check if file has unsupported extension
                 obj.filename=''
                 return {"result":"ERROR: Unsupported datatype"}
             
             obj.filename=file.filename
             
-            if file.filename.endswith(".csv"):
+            if file.filename.endswith(".csv"): 
                 obj.isCSV=True
                 df = pd.read_csv(file.file)
                 obj.prepare_agent(df)
