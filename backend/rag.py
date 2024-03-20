@@ -42,7 +42,7 @@ class RAG:
         self.chat_history=[]
         self.prepare_vectorstore(text)
         retriever=self.vectorstore.as_retriever()
-        llm = ChatGoogleGenerativeAI(model='gemini-pro', temperature=0.3, convert_system_message_to_human=True, verbose=True)
+        llm = ChatGoogleGenerativeAI(model='gemini-pro', temperature=0.3, convert_system_message_to_human=True, verbose=True, google_api_key="AIzaSyB3xjgb0DF84EvKsvKafVFdih9jpaj4jGQ")
         query_transforming_retriever_chain = (self.query_transform_prompt | llm | StrOutputParser() | retriever).with_config(run_name="chat_retriever_chain")
         document_chain =create_stuff_documents_chain(llm, self.question_answering_prompt)
         conversational_retrieval_chain = RunnablePassthrough.assign(
@@ -53,7 +53,7 @@ class RAG:
         self.chain=conversational_retrieval_chain
 
     def prepare_agent(self, df:pd.DataFrame)->None:
-        self.agent=create_pandas_dataframe_agent(llm=ChatGoogleGenerativeAI(model='gemini-pro', temperature=0.3, convert_system_message_to_human=True), df=df, verbose=True)
+        self.agent=create_pandas_dataframe_agent(llm=ChatGoogleGenerativeAI(model='gemini-pro', temperature=0.3, convert_system_message_to_human=True), df=df, verbose=True, google_api_key="AIzaSyB3xjgb0DF84EvKsvKafVFdih9jpaj4jGQ")
     
     def predict(self, question: str) -> dict:
         if self.isCSV and self.agent:
