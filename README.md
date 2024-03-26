@@ -1,5 +1,5 @@
 # Chat Documents
-
+https://www.loom.com/share/1372c4767c024cbaacbea49cc8aa3f1e?sid=fe423718-f928-4cee-b836-e6adf6e8bbb2
 ## Preface
 Chat document is a chatbot application which takes a file as an input and answers user's query. The goal of this application is to accurately provide answers based on the uploaded file. This application could be used as an assistant to quickly answer questions or summarize facts from files containing large amounts of text data, making our lives easier.
 
